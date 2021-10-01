@@ -1,31 +1,23 @@
-// d1  d2  d5
-
 #include <ESP8266WiFi.h>
 #include<FirebaseArduino.h>
+
 #define FIREBASE_HOST "myroom-b3273.firebaseio.com/"
 #define FIREBASE_AUTH "tDLFJNprBAPi8mBwhA4pbEllJTnUVykDxMsMjVMy"
+
 #define WIFI_SSID "Frederico Zile"
 #define WIFI_PASSWORD "1234mzhd"
-#define Relay1 12 //D6
+
+#define Relay 0
 int val1;
-#define Relay2 14 //D2
-int val2;
-#define Relay3 4  //D1
-int val3;
-#define Relay4 5 //D5
-int val4;
+
 void setup()
 {
   Serial.begin(115200);
   
-  pinMode(Relay2, OUTPUT);
-  pinMode(Relay3, OUTPUT);
-  pinMode(Relay4, OUTPUT);
+  pinMode(Relay, OUTPUT);
 
   
-  digitalWrite(Relay2, HIGH);
-  digitalWrite(Relay3, HIGH);
-  digitalWrite(Relay4, HIGH);
+  digitalWrite(Relay, HIGH);
 
   WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
   Serial.print("connectando");
@@ -40,10 +32,9 @@ void setup()
 
   Firebase.begin(FIREBASE_HOST, FIREBASE_AUTH);
   
-  Firebase.setInt("S2", 0);
-  Firebase.setInt("S3", 0);
-  Firebase.setInt("S4", 0);
+  Firebase.setInt("S1", 0);
 }
+
 void firebasereconnect()
 {
   Serial.println("Tentando acessar a base de dados");
@@ -60,37 +51,15 @@ void loop()
   }
 
   
-  val2 = Firebase.getString("S2").toInt();
-  if (val2 == 1)
+  val1 = Firebase.getString("S1").toInt();
+  if (val1 == 1)
   {
-    digitalWrite(Relay2, LOW);
-    Serial.println("light 2 ON");
+    digitalWrite(Relay, LOW);
+    Serial.println("light ON");
   }
-  else if (val2 == 0)         {
-    digitalWrite(Relay2, HIGH);
-    Serial.println("light 2 OFF");
+  else if (val1 == 0)         {
+    digitalWrite(Relay, HIGH);
+    Serial.println("light OFF");
   }
 
-  val3 = Firebase.getString("S3").toInt();
-  if (val3 == 1)
-  {
-    digitalWrite(Relay3, LOW);
-    Serial.println("light 3 ON");
-  }
-  else if (val3 == 0)  {
-    digitalWrite(Relay3, HIGH);
-    Serial.println("light 3 OFF");
-  }
-
-  val4 = Firebase.getString("S4").toInt();
-  if (val4 == 1)
-  {
-    digitalWrite(Relay4, LOW);
-    Serial.println("light 4 ON");
-  }
-  else if (val4 == 0)
-  {
-    digitalWrite(Relay4, HIGH);
-    Serial.println("light 4 OFF");
-  }
 }
