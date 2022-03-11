@@ -2,10 +2,10 @@
 #include<FirebaseArduino.h>
 
 #define FIREBASE_HOST "cursoiot-02-default-rtdb.firebaseio.com/"
-#define FIREBASE_AUTH "nwEuF0XUCr7igrFFu9G0VHxYCXtUWlTOHjRVVLdw"
+#define FIREBASE_AUTH ""
 
-#define WIFI_SSID "TME Education"
-#define WIFI_PASSWORD "mz1234@mzm"
+#define WIFI_SSID ""
+#define WIFI_PASSWORD ""
 
 #define Relay 0
 int val1;
